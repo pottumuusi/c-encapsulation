@@ -37,9 +37,9 @@ demo_construct_to_heap(int _foo)
     object_private->foo = _foo;
 
 #if DEBUG
-    printf("constructDemoHeap, object_full is: %p\n", object_full);
-    printf("constructDemoHeap, object_public is: %p\n", object_public);
-    printf("constructDemoHeap, object_private is: %p\n", object_private);
+    printf("demo_construct_to_heap, object_full is: %p\n", object_full);
+    printf("demo_construct_to_heap, object_public is: %p\n", object_public);
+    printf("demo_construct_to_heap, object_private is: %p\n", object_private);
 #endif
 
     if ((void*) object_full != (void*) object_public) {
