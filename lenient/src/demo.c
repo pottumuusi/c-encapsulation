@@ -8,10 +8,10 @@
 
 static int add_to_foo(int operand);
 
-// Function context begin
+// Module context begin
 static struct Demo* this_public;
 static struct DemoPrivate* this_private;
-// Function context end
+// Module context end
 
 MODULE_GENERATE_CONTEXT_FUNCTIONS(struct Demo, struct DemoFull)
 

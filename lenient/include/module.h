@@ -28,6 +28,9 @@
     static void module_unload_context(void);                       \
     static void module_validate_context(void);
 
+/*
+ * Returns -1 on error and 0 on success.
+ */
 #define MODULE_GENERATE_LOAD_CONTEXT(struct_public, struct_full)           \
 static int32_t                                                             \
 module_load_context(struct_public* new_this)                               \
