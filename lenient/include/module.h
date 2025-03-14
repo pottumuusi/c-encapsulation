@@ -50,7 +50,7 @@ module_load_context(struct_public* new_this)                               \
     }                                                                      \
                                                                            \
     this_public = new_this;                                                \
-    this_private = &((( struct_full *) new_this)->private);                \
+    this_private = &(((struct_full*) new_this)->private);                  \
                                                                            \
     return 0;                                                              \
 }
