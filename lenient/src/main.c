@@ -81,7 +81,8 @@
  * function for finding private counterpart of the public instance by accessing
  * the list of full module instances. As a drawback, this should prevent the
  * possibility to find private counterpart for instances constructed with
- * automatic storage (stored to stack).
+ * automatic storage (stored to stack), as DemoFull containing DemoPrivate fall
+ * out of scope when returning from constructor.
  * https://en.wikipedia.org/wiki/C_syntax#Storage_class_specifiers
  *
  * I came across a set of guidelines for developing safe C code: "The Power of
