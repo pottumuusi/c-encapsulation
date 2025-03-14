@@ -46,6 +46,8 @@ demo_construct_to_heap(int _foo)
         fprintf(stderr, "Unexpected memory address for public field of module\n");
         free(object_full);
         object_full = NULL;
+        object_public = NULL;
+        object_private = NULL;
         return NULL;
     }
 
@@ -59,6 +61,8 @@ demo_destroy(struct Demo* demo_to_destroy_public)
         (struct DemoFull*) demo_to_destroy_public;
 
     free(demo_to_destroy);
+    demo_to_destroy_public = NULL;
+    demo_to_destroy = NULL;
 }
 
 int
