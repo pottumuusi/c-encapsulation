@@ -117,7 +117,11 @@ int main(void)
     result = 0;
     object_demo = NULL;
 
-    object_demo = demo_construct_to_heap(4); // TODO handle NULL return value
+    object_demo = demo_construct_to_heap(4);
+    if (NULL == object_demo) {
+        fprintf(stderr, "Failed to construct Demo object.");
+        return 1;
+    }
 
     result = demo_add_to_foo_unrecoverable(object_demo, 44);
     printf(
