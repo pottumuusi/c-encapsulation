@@ -8,11 +8,12 @@
  * compilation unit via a pointer for example.
  *
  * Each function utilizing `this_public` or `this_private` should first call
- * `module_load_context()` and finish by calling `module_unload_context()`.
- * `module_validate_context_loaded()` is provided for sanity checking that a
- * context is actually loaded and as an example can be utilized in internal
- * functions if a file provides exposed functions calling to internal
- * functions.
+ * `module_load_context()` before use of the variables and finish by calling
+ * `module_unload_context()` when done using the variables.
+ * `module_validate_context_loaded()` and `module_exit_on_unloaded_context()`
+ * are provided for sanity checking that a context is actually loaded and as an
+ * example can be utilized in internal functions if a file provides exposed
+ * functions calling to internal functions.
  *
  * To have visibility to static `this_public` and `this_private` of any module
  * during compilation, 'module context' function definitions are placed behind
