@@ -23,51 +23,53 @@ MODULE_GENERATE_CONTEXT_FUNCTIONS(struct Demo, struct DemoFull)
 struct Demo*
 demo_construct_to_heap(int _foo)
 {
-    struct DemoFull* object_full;
-    struct Demo* object_public;
-    struct DemoPrivate* object_private;
+    struct DemoFull* instance_full;
+    struct Demo* instance_public;
+    struct DemoPrivate* instance_private;
 
-    object_full = NULL;
+    instance_full = NULL;
 
     /*
      * Allocate memory for a struct containing both public and private data of
      * Demo module.
      */
-    object_full = calloc(1, sizeof(struct DemoFull));
-    if (NULL == object_full) {
-        fprintf(stderr, "Failed to allocate memory for full object\n");
+    instance_full = calloc(1, sizeof(struct DemoFull));
+    if (NULL == instance_full) {
+        fprintf(stderr, "Failed to allocate memory for full instance\n");
         return NULL;
     }
 
     // Extract public and private data from full module data.
-    object_public = &(object_full->public);
-    object_private = &(object_full->private);
+    instance_public = &(instance_full->public);
+    instance_private = &(instance_full->private);
 
     // Initialize public and private data.
-    (void) object_public;
-    object_private->foo = _foo;
+    (void) instance_public;
+    instance_private->foo = _foo;
 
 #if DEBUG
-    printf("demo_construct_to_heap, object_full is: %p\n", object_full);
-    printf("demo_construct_to_heap, object_public is: %p\n", object_public);
-    printf("demo_construct_to_heap, object_private is: %p\n", object_private);
+    printf("demo_construct_to_heap, instance_full is: %p\n", instance_full);
+    printf("demo_construct_to_heap, instance_public is: %p\n",
+        instance_public);
+    printf("demo_construct_to_heap, instance_private is: %p\n",
+        instance_private);
 #endif
 
     /*
      * Ensure that pointer to public data can be converted to a pointer of full
      * module data, that can be used for accessing module private data.
      */
-    if ((void*) object_full != (void*) object_public) {
+    if ((void*) instance_full != (void*) instance_public) {
         fprintf(stderr,
             "Unexpected memory address for public field of module\n");
-        free(object_full);
-        object_full = NULL;
-        object_public = NULL;
-        object_private = NULL;
+        free(instance_full);
+        instance_full = NULL;
+        instance_public = NULL;
+        instance_private = NULL;
         return NULL;
     }
 
-    return object_public;
+    return instance_public;
 }
 
 void
@@ -82,7 +84,7 @@ demo_destroy(struct Demo* demo_to_destroy_public)
 }
 
 int
-demo_add_to_foo_unrecoverable(struct Demo* object_public, int operand)
+demo_add_to_foo_unrecoverable(struct Demo* instance_public, int operand)
 {
     int err;
     int result;
@@ -90,7 +92,7 @@ demo_add_to_foo_unrecoverable(struct Demo* object_public, int operand)
     err = 0;
     result = 0;
 
-    err = module_load_context(object_public);
+    err = module_load_context(instance_public);
     if (0 != err) {
         fprintf(stderr, "Failed to load module context.\n");
         exit(1);
@@ -112,7 +114,7 @@ add_to_foo_unrecoverable(int operand)
 
 int
 demo_add_to_foo_recoverable(
-    struct Demo* object_public,
+    struct Demo* instance_public,
     int operand,
     int* result)
 {
@@ -120,7 +122,7 @@ demo_add_to_foo_recoverable(
 
     err = 0;
 
-    err = module_load_context(object_public);
+    err = module_load_context(instance_public);
     if (0 != err) {
         fprintf(stderr, "Failed to load module context.\n");
         return -1;
