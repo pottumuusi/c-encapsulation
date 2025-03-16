@@ -110,15 +110,28 @@ int main(void)
 {
     struct Demo* object_demo;
 
+    int err;
     int result;
 
+    err = 0;
     result = 0;
     object_demo = NULL;
 
-    object_demo = demo_construct_to_heap(4);
+    object_demo = demo_construct_to_heap(4); // TODO handle NULL return value
 
-    result = demo_add_to_foo(object_demo, 44);
-    printf("After calling demo_add_to_foo, result is: %d\n", result);
+    result = demo_add_to_foo_unrecoverable(object_demo, 44);
+    printf(
+        "After calling demo_add_to_foo_unrecoverable, result is: %d\n",
+        result);
+
+    err = demo_add_to_foo_recoverable(object_demo, 26, &result);
+    if (0 != err) {
+        fprintf(stderr, "Failed to add to foo.\n");
+    } else {
+        printf(
+            "After calling demo_add_to_foo_recoverable, result is: %d\n",
+            result);
+    }
 
 #if INVALID_ACCESS_TO_PRIVATE_DATA
     printf("object_demo->foo is: %d", object_demo->foo);

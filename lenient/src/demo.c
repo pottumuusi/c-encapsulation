@@ -6,7 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int add_to_foo(int operand);
+static int add_to_foo_unrecoverable(int operand);
+static int add_to_foo_recoverable(int operand, int* result);
 
 // Module context begin
 static struct Demo* this_public;
@@ -57,7 +58,8 @@ demo_construct_to_heap(int _foo)
      * module data, that can be used for accessing module private data.
      */
     if ((void*) object_full != (void*) object_public) {
-        fprintf(stderr, "Unexpected memory address for public field of module\n");
+        fprintf(stderr,
+            "Unexpected memory address for public field of module\n");
         free(object_full);
         object_full = NULL;
         object_public = NULL;
@@ -80,30 +82,75 @@ demo_destroy(struct Demo* demo_to_destroy_public)
 }
 
 int
-demo_add_to_foo(struct Demo* object_public, int operand)
+demo_add_to_foo_unrecoverable(struct Demo* object_public, int operand)
 {
-    int ret;
+    int err;
     int result;
 
-    ret = 0;
+    err = 0;
     result = 0;
 
-    ret = module_load_context(object_public);
-    if (0 != ret) {
-        fprintf(stderr, "Failed to load module context.");
+    err = module_load_context(object_public);
+    if (0 != err) {
+        fprintf(stderr, "Failed to load module context.\n");
         exit(1);
     }
 
-    result = add_to_foo(operand);
+    result = add_to_foo_unrecoverable(operand);
     module_unload_context();
 
     return result;
 }
 
 static int
-add_to_foo(int operand)
+add_to_foo_unrecoverable(int operand)
 {
     module_exit_on_unloaded_context();
 
     return this_private->foo + operand;
+}
+
+int
+demo_add_to_foo_recoverable(
+    struct Demo* object_public,
+    int operand,
+    int* result)
+{
+    int err;
+
+    err = 0;
+
+    err = module_load_context(object_public);
+    if (0 != err) {
+        fprintf(stderr, "Failed to load module context.\n");
+        return -1;
+    }
+
+    err = add_to_foo_recoverable(operand, result);
+    if (0 != err) {
+        fprintf(stderr, "Failed to add to foo on internal level.\n");
+        return -1;
+    }
+
+    module_unload_context();
+
+    return 0;
+}
+
+static int
+add_to_foo_recoverable(int operand, int* result)
+{
+    int err;
+
+    err = 0;
+
+    err = module_validate_context_loaded();
+    if (0 != err) {
+        fprintf(stderr, "Module context is not loaded while adding to foo\n");
+        return -1;
+    }
+
+    *result = this_private->foo + operand;
+
+    return 0;
 }
