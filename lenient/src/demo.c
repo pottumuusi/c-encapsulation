@@ -38,7 +38,7 @@ demo_construct_to_heap(int _foo)
         return NULL;
     }
 
-    // Extract public and private data from DemoFull.
+    // Extract public and private data from full module data.
     object_public = &(object_full->public);
     object_private = &(object_full->private);
 
@@ -54,7 +54,7 @@ demo_construct_to_heap(int _foo)
 
     /*
      * Ensure that pointer to public data can be converted to a pointer of full
-     * module data, that can be used for accessing private data.
+     * module data, that can be used for accessing module private data.
      */
     if ((void*) object_full != (void*) object_public) {
         fprintf(stderr, "Unexpected memory address for public field of module\n");
