@@ -4,7 +4,7 @@ INCLUDE_LENIENT := -Ilenient/include
 out:
 	mkdir out
 
-out/lenient : $(SRC_LENIENT) out
+out/lenient: $(SRC_LENIENT) out
 	gcc $(INCLUDE_LENIENT) $(SRC_LENIENT) -o $@
 
 out/lenient_invalid_private_access: $(SRC_LENIENT) out
