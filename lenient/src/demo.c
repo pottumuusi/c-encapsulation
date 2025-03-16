@@ -82,7 +82,7 @@ demo_add_to_foo(struct Demo* object_public, int operand)
 static int
 add_to_foo(int operand)
 {
-    module_validate_context();
+    module_exit_on_unloaded_context();
 
     return this_private->foo + operand;
 }
