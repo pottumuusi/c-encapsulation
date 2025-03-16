@@ -82,11 +82,18 @@ demo_destroy(struct Demo* demo_to_destroy_public)
 int
 demo_add_to_foo(struct Demo* object_public, int operand)
 {
+    int ret;
     int result;
 
+    ret = 0;
     result = 0;
 
-    module_load_context(object_public);
+    ret = module_load_context(object_public);
+    if (0 != ret) {
+        fprintf(stderr, "Failed to load module context.");
+        exit(1);
+    }
+
     result = add_to_foo(operand);
     module_unload_context();
 
