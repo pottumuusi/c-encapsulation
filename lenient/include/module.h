@@ -48,19 +48,19 @@ static int32_t                                                             \
 module_load_context(struct_public* new_this)                               \
 {                                                                          \
     if (NULL != this_public || NULL != this_private) {                     \
-        fprintf(stderr, "Previous context has not been unloaded.");        \
+        fprintf(stderr, "Previous module context has not been unloaded."); \
         return -1;                                                         \
     }                                                                      \
                                                                            \
     if (NULL == new_this) {                                                \
-        fprintf(stderr, "Function context load received a null pointer."); \
+        fprintf(stderr, "Module context load received a null pointer.");   \
         return -1;                                                         \
     }                                                                      \
                                                                            \
     if (&(((struct_full*) new_this)->public) != new_this) {                \
         fprintf(                                                           \
             stderr,                                                        \
-            "Function context load received an unrecognized pointer.");    \
+            "Module context load received an unrecognized pointer.");      \
         return -1;                                                         \
     }                                                                      \
                                                                            \

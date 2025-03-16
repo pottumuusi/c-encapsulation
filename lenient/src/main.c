@@ -106,8 +106,6 @@
 // * DEBUG to be 1 in compiler flags for enabling debug features.
 // * INVALID_ACCESS_TO_PRIVATE_DATA to be 1 for producing a compilation error.
 
-extern struct DemoInterface Demo;
-
 int main(void)
 {
     struct Demo* object_demo;

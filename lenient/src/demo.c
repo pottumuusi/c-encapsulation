@@ -15,6 +15,10 @@ static struct DemoPrivate* this_private;
 
 MODULE_GENERATE_CONTEXT_FUNCTIONS(struct Demo, struct DemoFull)
 
+/*
+ * Construct an instance of Demo module to heap and return a pointer to public
+ * data of the module.
+ */
 struct Demo*
 demo_construct_to_heap(int _foo)
 {
@@ -24,16 +28,22 @@ demo_construct_to_heap(int _foo)
 
     object_full = NULL;
 
+    /*
+     * Allocate memory for a struct containing both public and private data of
+     * Demo module.
+     */
     object_full = calloc(1, sizeof(struct DemoFull));
     if (NULL == object_full) {
         fprintf(stderr, "Failed to allocate memory for full object\n");
         return NULL;
     }
 
+    // Extract public and private data from DemoFull.
     object_public = &(object_full->public);
     object_private = &(object_full->private);
 
-    (void) object_public; // Here would initialize public data
+    // Initialize public and private data.
+    (void) object_public;
     object_private->foo = _foo;
 
 #if DEBUG
@@ -42,6 +52,10 @@ demo_construct_to_heap(int _foo)
     printf("demo_construct_to_heap, object_private is: %p\n", object_private);
 #endif
 
+    /*
+     * Ensure that pointer to public data can be converted to a pointer of full
+     * module data, that can be used for accessing private data.
+     */
     if ((void*) object_full != (void*) object_public) {
         fprintf(stderr, "Unexpected memory address for public field of module\n");
         free(object_full);
