@@ -81,6 +81,8 @@ module_unload_context(void)            \
     this_private = NULL;               \
 }
 
+// TODO document the return values and consider returning true, when context
+// loaded. Now returning 0 as in no error. Then fix the tests.
 #define MODULE_GENERATE_VALIDATE_CONTEXT_LOADED \
 static int32_t                                  \
 module_validate_context_loaded(void)            \
@@ -98,6 +100,7 @@ module_validate_context_loaded(void)            \
     return 0;                                   \
 }
 
+// TODO to allow testing, consider if a signal can be fired instead of exiting
 #define MODULE_GENERATE_EXIT_ON_UNLOADED_CONTEXT         \
 static void                                              \
 module_exit_on_unloaded_context(void)                    \
