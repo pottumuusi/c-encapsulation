@@ -4,7 +4,10 @@ INCLUDE_LENIENT := -Ilenient/include
 
 SRC_TEST := \
 	$(SRC_LENIENT_WITHOUT_MAIN) \
-	$(shell find ./test -name "*.c")
+	$(filter-out test/scetch.c,$(shell find test -name "*.c"))
+SRC_TEST_SCETCH := \
+	$(SRC_LENIENT_WITHOUT_MAIN) \
+	test/scetch.c
 INCLUDE_TEST := $(INCLUDE_LENIENT)
 
 LDFLAGS :=
@@ -18,6 +21,15 @@ out:
 # /etc/ld.so.conf
 test: out/utest
 	$<
+
+# A target for scetching test implementation. You can write a test scetch to
+# test/scetch.c. The program can be debugged and signals are not hidden by
+# Criterion test suite.
+scetch: out/scetch
+	$<
+
+out/scetch: $(SRC_TEST_SCETCH) out
+	$(CC) -g $(INCLUDE_TEST) $(SRC_TEST_SCETCH) -o $@
 
 out/utest: $(SRC_TEST) out
 	$(CC) $(INCLUDE_TEST) $(SRC_TEST) $(LDFLAGS_TEST) -o $@
