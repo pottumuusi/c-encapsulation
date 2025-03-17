@@ -108,27 +108,27 @@
 
 int main(void)
 {
-    struct Demo* object_demo;
+    struct Demo* instance_demo;
 
     int err;
     int result;
 
     err = 0;
     result = 0;
-    object_demo = NULL;
+    instance_demo = NULL;
 
-    object_demo = demo_construct_to_heap(4);
-    if (NULL == object_demo) {
-        fprintf(stderr, "Failed to construct Demo object.");
+    instance_demo = demo_construct_to_heap(4);
+    if (NULL == instance_demo) {
+        fprintf(stderr, "Failed to construct Demo instance.");
         return 1;
     }
 
-    result = demo_add_to_foo_unrecoverable(object_demo, 44);
+    result = demo_add_to_foo_unrecoverable(instance_demo, 44);
     printf(
         "After calling demo_add_to_foo_unrecoverable, result is: %d\n",
         result);
 
-    err = demo_add_to_foo_recoverable(object_demo, 26, &result);
+    err = demo_add_to_foo_recoverable(instance_demo, 26, &result);
     if (0 != err) {
         fprintf(stderr, "Failed to add to foo.\n");
     } else {
@@ -138,11 +138,11 @@ int main(void)
     }
 
 #if INVALID_ACCESS_TO_PRIVATE_DATA
-    printf("object_demo->foo is: %d", object_demo->foo);
+    printf("instance_demo->foo is: %d", instance_demo->foo);
 #endif
 
-    demo_destroy(object_demo);
-    object_demo = NULL;
+    demo_destroy(instance_demo);
+    instance_demo = NULL;
 
     return 0;
 }
