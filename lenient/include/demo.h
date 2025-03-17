@@ -1,24 +1,24 @@
 #ifndef DEMO_H_DEFINED
 #define DEMO_H_DEFINED
 
-struct Demo {
+struct demo {
 };
 
-struct DemoPrivate {
+struct demo_private {
     int foo;
 };
 
-struct DemoFull {
-    struct Demo public;
-    struct DemoPrivate private;
+struct demo_full {
+    struct demo public;
+    struct demo_private private;
 };
 
-struct Demo* demo_construct_to_heap(int _foo);
-void demo_destroy(struct Demo* demo_to_destroy_public);
+struct demo* demo_construct_to_heap(int _foo);
+void demo_destroy(struct demo* demo_to_destroy_public);
 
-int demo_add_to_foo_unrecoverable(struct Demo* instance_public, int operand);
+int demo_add_to_foo_unrecoverable(struct demo* instance_public, int operand);
 int demo_add_to_foo_recoverable(
-        struct Demo* instance_public,
+        struct demo* instance_public,
         int operand,
         int* result);
 

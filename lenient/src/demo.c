@@ -10,30 +10,30 @@ static int add_to_foo_unrecoverable(int operand);
 static int add_to_foo_recoverable(int operand, int* result);
 
 // Module context begin
-static struct Demo* this_public;
-static struct DemoPrivate* this_private;
+static struct demo* this_public;
+static struct demo_private* this_private;
 // Module context end
 
-MODULE_GENERATE_CONTEXT_FUNCTIONS(struct Demo, struct DemoFull)
+MODULE_GENERATE_CONTEXT_FUNCTIONS(struct demo, struct demo_full)
 
 /*
- * Construct an instance of Demo module to heap and return a pointer to public
+ * Construct an instance of demo module to heap and return a pointer to public
  * data of the module.
  */
-struct Demo*
+struct demo*
 demo_construct_to_heap(int _foo)
 {
-    struct DemoFull* instance_full;
-    struct Demo* instance_public;
-    struct DemoPrivate* instance_private;
+    struct demo_full* instance_full;
+    struct demo* instance_public;
+    struct demo_private* instance_private;
 
     instance_full = NULL;
 
     /*
      * Allocate memory for a struct containing both public and private data of
-     * Demo module.
+     * demo module.
      */
-    instance_full = calloc(1, sizeof(struct DemoFull));
+    instance_full = calloc(1, sizeof(struct demo_full));
     if (NULL == instance_full) {
         fprintf(stderr, "Failed to allocate memory for full instance\n");
         return NULL;
@@ -73,10 +73,10 @@ demo_construct_to_heap(int _foo)
 }
 
 void
-demo_destroy(struct Demo* demo_to_destroy_public)
+demo_destroy(struct demo* demo_to_destroy_public)
 {
-    struct DemoFull* demo_to_destroy =
-        (struct DemoFull*) demo_to_destroy_public;
+    struct demo_full* demo_to_destroy =
+        (struct demo_full*) demo_to_destroy_public;
 
     free(demo_to_destroy);
     demo_to_destroy_public = NULL;
@@ -84,7 +84,7 @@ demo_destroy(struct Demo* demo_to_destroy_public)
 }
 
 int
-demo_add_to_foo_unrecoverable(struct Demo* instance_public, int operand)
+demo_add_to_foo_unrecoverable(struct demo* instance_public, int operand)
 {
     int err;
     int result;
@@ -114,7 +114,7 @@ add_to_foo_unrecoverable(int operand)
 
 int
 demo_add_to_foo_recoverable(
-    struct Demo* instance_public,
+    struct demo* instance_public,
     int operand,
     int* result)
 {
