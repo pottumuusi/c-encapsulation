@@ -27,6 +27,7 @@ demo_construct_to_heap(int _foo)
     struct demo* instance_public;
     struct demo_private* instance_private;
 
+    // TODO initialize remaining local variables to NULL
     instance_full = NULL;
 
     /*
