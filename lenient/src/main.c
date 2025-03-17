@@ -8,7 +8,7 @@
  * demo_test.foo; // This should produce an error.
  *
  * Having `demo_test` twice in the statement looks clumsy. It would be
- * needed to write Demo* as the first parameter of every function.
+ * needed to write demo* as the first parameter of every function.
  *
  * ENTER_CONTEXT(demo_test)
  * demo_test.addToFoo();
@@ -26,7 +26,7 @@
  *     2)
  * -> demo_test.addToFoo(demo_test, 2)
  *
- * Here it would be needed to write Demo* as the first parameter of every
+ * Here it would be needed to write demo* as the first parameter of every
  * function.
  *
  * SET_MODULE(demo_test);
@@ -62,7 +62,7 @@
  * should not contain any behavior, only data. The resulting call site could
  * look like the following:
  *
- * Demo->add_to_foo(demo_instance, 123);
+ * demo->add_to_foo(demo_instance, 123);
  *
  * The signature of the function can be simplified (in an attempt to make it
  * easier to recall purpose of functions from minimal set of parameters) by
@@ -70,7 +70,7 @@
  * passed in some other way, such as static global variable. And here the
  * information hiding comes into play. Private data of the instance is made
  * easily accessible in the internal function. When private data is implemented
- * as a field of DemoFull and Demo is returned from the constructor, it is
+ * as a field of demo_full and demo is returned from the constructor, it is
  * possible to access private data outside the module. Accessing private data
  * outside its module is against design principles. I deem this private data
  * hiding to be sufficient to prevent accidental use outside their modules.
@@ -81,7 +81,7 @@
  * function for finding private counterpart of the public instance by accessing
  * the list of full module instances. As a drawback, this should prevent the
  * possibility to find private counterpart for instances constructed with
- * automatic storage (stored to stack), as DemoFull containing DemoPrivate fall
+ * automatic storage (stored to stack), as demo_full containing demo_private fall
  * out of scope when returning from constructor.
  * https://en.wikipedia.org/wiki/C_syntax#Storage_class_specifiers
  *
@@ -108,7 +108,7 @@
 
 int main(void)
 {
-    struct Demo* instance_demo;
+    struct demo* instance_demo;
 
     int err;
     int result;
@@ -119,7 +119,7 @@ int main(void)
 
     instance_demo = demo_construct_to_heap(4);
     if (NULL == instance_demo) {
-        fprintf(stderr, "Failed to construct Demo instance.");
+        fprintf(stderr, "Failed to construct demo instance.");
         return 1;
     }
 
