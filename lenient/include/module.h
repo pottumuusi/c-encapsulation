@@ -27,6 +27,8 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define MODULE_GENERATE_CONTEXT_FUNCTIONS(struct_public, struct_full) \
     MODULE_GENERATE_DECLARATIONS(struct_public)                       \
