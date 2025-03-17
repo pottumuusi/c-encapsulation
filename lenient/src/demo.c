@@ -18,7 +18,7 @@ MODULE_GENERATE_CONTEXT_FUNCTIONS(struct demo, struct demo_full)
 
 /*
  * Construct an instance of demo module to heap and return a pointer to public
- * data of the module.
+ * data of the module instance.
  */
 struct demo*
 demo_construct_to_heap(int _foo)
@@ -30,8 +30,8 @@ demo_construct_to_heap(int _foo)
     instance_full = NULL;
 
     /*
-     * Allocate memory for a struct containing both public and private data of
-     * demo module.
+     * Allocate memory for module instance, containing both public and private
+     * data.
      */
     instance_full = calloc(1, sizeof(struct demo_full));
     if (NULL == instance_full) {
