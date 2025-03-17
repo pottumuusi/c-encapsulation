@@ -1,6 +1,8 @@
 #ifndef MODULE_WRAPPER_H_DEFINED
 #define MODULE_WRAPPER_H_DEFINED
 
+#include <stdint.h>
+
 struct module_wrapper {
     int exposed;
 };
