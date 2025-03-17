@@ -19,7 +19,8 @@ main() {
     pushd criterion-v2.3.3
     echo "Copying headers and library under /usr/local/"
     sudo cp --verbose --recursive include/criterion /usr/local/include/
-    sudo cp --verbose lib/libcriterion* /usr/local/lib/
+    sudo cp --verbose --no-dereference --preserve=links \
+        lib/libcriterion* /usr/local/lib/
     popd # criterion-v2.3.3
 
     popd # ${DEPENDENCIES_INSTALL_WORKAREA}
