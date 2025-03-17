@@ -1,4 +1,7 @@
 #include <criterion/criterion.h>
+#include <criterion/new/assert.h>
+
+#include "module_wrapper.h"
 
 #if 0
 void setup(void) {
