@@ -104,7 +104,7 @@
 
 // Define:
 // * DEBUG to be 1 in compiler flags for enabling debug features.
-// * INVALID_ACCESS_TO_PRIVATE_DATA to be 1 for producing a compilation error.
+// * ACCESS_PRIVATE_VIA_PUBLIC_INTERFACE to be 1 for producing a compilation error.
 
 int main(void)
 {
@@ -137,7 +137,7 @@ int main(void)
             result);
     }
 
-#if INVALID_ACCESS_TO_PRIVATE_DATA
+#if ACCESS_PRIVATE_VIA_PUBLIC_INTERFACE
     printf("instance_demo->foo is: %d", instance_demo->foo);
 #endif
 
