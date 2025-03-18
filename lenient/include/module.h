@@ -10,8 +10,8 @@
  * Each function utilizing `this_public` or `this_private` should first call
  * `module_load_context()` before use of the variables and finish by calling
  * `module_unload_context()` when done using the variables.
- * `module_is_context_loaded()` and `module_exit_on_unloaded_context()`
- * are provided for sanity checking that a context is actually loaded and as an
+ * `module_is_context_loaded()` and `module_exit_on_unloaded_context()` are
+ * provided for sanity checking that a context is actually loaded and as an
  * example can be utilized in internal functions if a file provides exposed
  * functions calling to internal functions.
  *
