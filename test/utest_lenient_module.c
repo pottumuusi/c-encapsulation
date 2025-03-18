@@ -98,11 +98,11 @@ Test(lenient_module, context_load_unload_load_result_in_success)
 Test(lenient_module, context_validated_to_not_be_loaded_before_load)
 {
     int err;
-    int result;
+    int is_loaded;
     struct module_wrapper* module_wrapper;
 
     err = -1;
-    result = -1;
+    is_loaded = -1;
     module_wrapper = NULL;
 
     /*
@@ -111,8 +111,8 @@ Test(lenient_module, context_validated_to_not_be_loaded_before_load)
      */
     module_wrapper = module_wrapper_construct_to_heap(1, 2);
 
-    result = module_wrapper_is_context_loaded();
-    cr_assert(zero(i32, result));
+    is_loaded = module_wrapper_is_context_loaded();
+    cr_assert(zero(i32, is_loaded));
 
     module_wrapper_destroy(module_wrapper);
     module_wrapper = NULL;
@@ -121,19 +121,19 @@ Test(lenient_module, context_validated_to_not_be_loaded_before_load)
 Test(lenient_module, context_validated_to_be_loaded_after_load)
 {
     int err;
-    int result;
+    int is_loaded;
     struct module_wrapper* module_wrapper;
 
     err = -1;
-    result = -1;
+    is_loaded = -1;
     module_wrapper = NULL;
 
     module_wrapper = module_wrapper_construct_to_heap(1, 2);
     err = module_wrapper_load_context(module_wrapper);
     cr_assert(eq(err, 0));
 
-    result = module_wrapper_is_context_loaded();
-    cr_assert(eq(i32, result, 1));
+    is_loaded = module_wrapper_is_context_loaded();
+    cr_assert(eq(i32, is_loaded, 1));
 
     module_wrapper_destroy(module_wrapper);
     module_wrapper = NULL;
@@ -142,11 +142,11 @@ Test(lenient_module, context_validated_to_be_loaded_after_load)
 Test(lenient_module, context_validated_to_not_be_loaded_after_unload)
 {
     int err;
-    int result;
+    int is_loaded;
     struct module_wrapper* module_wrapper;
 
     err = -1;
-    result = -1;
+    is_loaded = -1;
     module_wrapper = NULL;
 
     module_wrapper = module_wrapper_construct_to_heap(1, 2);
@@ -154,8 +154,8 @@ Test(lenient_module, context_validated_to_not_be_loaded_after_unload)
     cr_assert(eq(err, 0));
 
     module_wrapper_unload_context();
-    result = module_wrapper_is_context_loaded();
-    cr_assert(zero(i32, result));
+    is_loaded = module_wrapper_is_context_loaded();
+    cr_assert(zero(i32, is_loaded));
 
     module_wrapper_destroy(module_wrapper);
     module_wrapper = NULL;
