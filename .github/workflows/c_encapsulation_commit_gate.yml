@@ -17,6 +17,9 @@ jobs:
     - name: Install build dependencies
       run: ./scripts/install_build_dependencies.sh
 
+    - name: Setup build environment
+      run: ldconfig
+
     - name: Run unit tests
       run: make test
 
