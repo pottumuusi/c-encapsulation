@@ -4,7 +4,7 @@ INCLUDE_LENIENT := -Ilenient/include
 
 SRC_TEST := \
 	$(SRC_LENIENT_WITHOUT_MAIN) \
-	$(filter-out test/scetch.c,$(shell find test -name "*.c"))
+	$(filter-out test/scetch.c,$(wildcard test/*.c))
 SRC_TEST_SCETCH := \
 	$(SRC_LENIENT_WITHOUT_MAIN) \
 	test/scetch.c

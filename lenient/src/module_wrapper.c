@@ -34,7 +34,7 @@ module_wrapper_construct_to_heap(int _exposed, int _hidden)
 
     if ((void*) instance_full != (void*) instance_public) {
         fprintf(stderr,
-            "Unexpected memory address for public field of module.\n");
+            "Unexpected memory address for public field of module instance.\n");
         free(instance_full);
         instance_full = NULL;
         instance_public = NULL;
@@ -48,8 +48,9 @@ module_wrapper_construct_to_heap(int _exposed, int _hidden)
 void
 module_wrapper_destroy(struct module_wrapper* target_public)
 {
-    struct module_wrapper_full* target =
-        (struct module_wrapper_full*) target_public;
+    struct module_wrapper_full* target;
+
+    target = (struct module_wrapper_full*) target_public;
 
     free(target);
     target = NULL;

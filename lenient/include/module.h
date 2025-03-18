@@ -46,31 +46,31 @@
 /*
  * Returns -1 on error and 0 on success.
  */
-#define MODULE_GENERATE_LOAD_CONTEXT(struct_public, struct_full)           \
-static int32_t                                                             \
-module_load_context(struct_public* new_this)                               \
-{                                                                          \
-    if (NULL != this_public || NULL != this_private) {                     \
-        fprintf(stderr, "Previous module context has not been unloaded."); \
-        return -1;                                                         \
-    }                                                                      \
-                                                                           \
-    if (NULL == new_this) {                                                \
-        fprintf(stderr, "Module context load received a null pointer.");   \
-        return -1;                                                         \
-    }                                                                      \
-                                                                           \
-    if (&(((struct_full*) new_this)->public) != new_this) {                \
-        fprintf(                                                           \
-            stderr,                                                        \
-            "Module context load received an unrecognized pointer.");      \
-        return -1;                                                         \
-    }                                                                      \
-                                                                           \
-    this_public = new_this;                                                \
-    this_private = &(((struct_full*) new_this)->private);                  \
-                                                                           \
-    return 0;                                                              \
+#define MODULE_GENERATE_LOAD_CONTEXT(struct_public, struct_full)             \
+static int32_t                                                               \
+module_load_context(struct_public* new_this)                                 \
+{                                                                            \
+    if (NULL != this_public || NULL != this_private) {                       \
+        fprintf(stderr, "Previous module context has not been unloaded.\n"); \
+        return -1;                                                           \
+    }                                                                        \
+                                                                             \
+    if (NULL == new_this) {                                                  \
+        fprintf(stderr, "Module context load received a null pointer.\n");   \
+        return -1;                                                           \
+    }                                                                        \
+                                                                             \
+    if (&(((struct_full*) new_this)->public) != new_this) {                  \
+        fprintf(                                                             \
+            stderr,                                                          \
+            "Module context load received an unrecognized pointer.\n");      \
+        return -1;                                                           \
+    }                                                                        \
+                                                                             \
+    this_public = new_this;                                                  \
+    this_private = &(((struct_full*) new_this)->private);                    \
+                                                                             \
+    return 0;                                                                \
 }
 
 #define MODULE_GENERATE_UNLOAD_CONTEXT \
@@ -83,32 +83,33 @@ module_unload_context(void)            \
 
 // TODO document the return values and consider returning true, when context
 // loaded. Now returning 0 as in no error. Then fix the tests.
-#define MODULE_GENERATE_VALIDATE_CONTEXT_LOADED \
-static int32_t                                  \
-module_validate_context_loaded(void)            \
-{                                               \
-    if (NULL == this_public) {                  \
-        fprintf(stderr, "NULL public this.");   \
-        return -1;                              \
-    }                                           \
-                                                \
-    if (NULL == this_private) {                 \
-        fprintf(stderr, "NULL private this.");  \
-        return -1;                              \
-    }                                           \
-                                                \
-    return 0;                                   \
+#define MODULE_GENERATE_VALIDATE_CONTEXT_LOADED   \
+static int32_t                                    \
+module_validate_context_loaded(void)              \
+{                                                 \
+    if (NULL == this_public) {                    \
+        fprintf(stderr, "NULL public this.\n");   \
+        return -1;                                \
+    }                                             \
+                                                  \
+    if (NULL == this_private) {                   \
+        fprintf(stderr, "NULL private this.\n");  \
+        return -1;                                \
+    }                                             \
+                                                  \
+    return 0;                                     \
 }
 
-// TODO to allow testing, consider if a signal can be fired instead of exiting
-#define MODULE_GENERATE_EXIT_ON_UNLOADED_CONTEXT         \
-static void                                              \
-module_exit_on_unloaded_context(void)                    \
-{                                                        \
-    if (0 != module_validate_context_loaded()) {         \
-        fprintf(stderr, "Exiting on unloaded context."); \
-        exit(1);                                         \
-    }                                                    \
+// TODO [#20] To allow testing, consider if a signal can be fired instead of
+// exiting.
+#define MODULE_GENERATE_EXIT_ON_UNLOADED_CONTEXT           \
+static void                                                \
+module_exit_on_unloaded_context(void)                      \
+{                                                          \
+    if (0 != module_validate_context_loaded()) {           \
+        fprintf(stderr, "Exiting on unloaded context.\n"); \
+        exit(1);                                           \
+    }                                                      \
 }
 
 #endif // MODULE_H_DEFINED
