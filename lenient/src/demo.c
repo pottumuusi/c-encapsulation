@@ -28,6 +28,8 @@ demo_construct_to_heap(int _foo)
     struct demo_private* instance_private;
 
     instance_full = NULL;
+    instance_public = NULL;
+    instance_private = NULL;
 
     /*
      * Allocate memory for module instance, containing both public and private
@@ -142,12 +144,12 @@ demo_add_to_foo_recoverable(
 static int
 add_to_foo_recoverable(int operand, int* result)
 {
-    int err;
+    int is_loaded;
 
-    err = 0;
+    is_loaded = -1;
 
-    err = module_validate_context_loaded();
-    if (0 != err) {
+    is_loaded = module_is_context_loaded();
+    if ( ! is_loaded) {
         fprintf(stderr, "Module context is not loaded while adding to foo\n");
         return -1;
     }
