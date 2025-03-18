@@ -148,7 +148,7 @@ add_to_foo_recoverable(int operand, int* result)
 
     err = 0;
 
-    err = module_validate_context_loaded();
+    err = module_is_context_loaded();
     if (0 != err) {
         fprintf(stderr, "Module context is not loaded while adding to foo\n");
         return -1;

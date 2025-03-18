@@ -29,7 +29,7 @@ void
 module_wrapper_unload_context(void);
 
 int32_t
-module_wrapper_validate_context_loaded(void);
+module_wrapper_is_context_loaded(void);
 
 void
 module_wrapper_exit_on_unloaded_context(void);

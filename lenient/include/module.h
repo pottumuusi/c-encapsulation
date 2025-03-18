@@ -10,7 +10,7 @@
  * Each function utilizing `this_public` or `this_private` should first call
  * `module_load_context()` before use of the variables and finish by calling
  * `module_unload_context()` when done using the variables.
- * `module_validate_context_loaded()` and `module_exit_on_unloaded_context()`
+ * `module_is_context_loaded()` and `module_exit_on_unloaded_context()`
  * are provided for sanity checking that a context is actually loaded and as an
  * example can be utilized in internal functions if a file provides exposed
  * functions calling to internal functions.
@@ -38,7 +38,7 @@
 #define MODULE_GENERATE_DECLARATIONS(struct_public)                \
     static int32_t module_load_context(struct_public* new_this);   \
     static void module_unload_context(void);                       \
-    static int32_t module_validate_context_loaded(void);           \
+    static int32_t module_is_context_loaded(void);                 \
     static void module_exit_on_unloaded_context(void);
 
 /*
@@ -79,23 +79,22 @@ module_unload_context(void)            \
     this_private = NULL;               \
 }
 
-// TODO document the return values and consider returning true, when context
-// loaded. Now returning 0 as in no error. Then fix the tests.
+/*
+ * Returns 1 if context is considered to be loaded and returns 0 otherwise.
+ */
 #define MODULE_GENERATE_VALIDATE_CONTEXT_LOADED   \
 static int32_t                                    \
-module_validate_context_loaded(void)              \
+module_is_context_loaded(void)                    \
 {                                                 \
     if (NULL == this_public) {                    \
-        fprintf(stderr, "NULL public this.\n");   \
-        return -1;                                \
+        return 0;                                 \
     }                                             \
                                                   \
     if (NULL == this_private) {                   \
-        fprintf(stderr, "NULL private this.\n");  \
-        return -1;                                \
+        return 0;                                 \
     }                                             \
                                                   \
-    return 0;                                     \
+    return 1;                                     \
 }
 
 // TODO [#20] To allow testing, consider if a signal can be fired instead of
@@ -104,7 +103,7 @@ module_validate_context_loaded(void)              \
 static void                                                \
 module_exit_on_unloaded_context(void)                      \
 {                                                          \
-    if (0 != module_validate_context_loaded()) {           \
+    if (0 != module_is_context_loaded()) {                 \
         fprintf(stderr, "Exiting on unloaded context.\n"); \
         exit(1);                                           \
     }                                                      \

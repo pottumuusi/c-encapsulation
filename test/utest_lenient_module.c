@@ -98,9 +98,11 @@ Test(lenient_module, context_load_unload_load_result_in_success)
 Test(lenient_module, context_validated_to_not_be_loaded_before_load)
 {
     int err;
+    int result;
     struct module_wrapper* module_wrapper;
 
     err = -1;
+    result = -1;
     module_wrapper = NULL;
 
     /*
@@ -109,8 +111,8 @@ Test(lenient_module, context_validated_to_not_be_loaded_before_load)
      */
     module_wrapper = module_wrapper_construct_to_heap(1, 2);
 
-    err = module_wrapper_validate_context_loaded();
-    cr_assert(ne(err, 0));
+    result = module_wrapper_is_context_loaded();
+    cr_assert(zero(i32, result));
 
     module_wrapper_destroy(module_wrapper);
     module_wrapper = NULL;
@@ -119,17 +121,19 @@ Test(lenient_module, context_validated_to_not_be_loaded_before_load)
 Test(lenient_module, context_validated_to_be_loaded_after_load)
 {
     int err;
+    int result;
     struct module_wrapper* module_wrapper;
 
     err = -1;
+    result = -1;
     module_wrapper = NULL;
 
     module_wrapper = module_wrapper_construct_to_heap(1, 2);
     err = module_wrapper_load_context(module_wrapper);
     cr_assert(eq(err, 0));
 
-    err = module_wrapper_validate_context_loaded();
-    cr_assert(eq(err, 0));
+    result = module_wrapper_is_context_loaded();
+    cr_assert(eq(i32, result, 1));
 
     module_wrapper_destroy(module_wrapper);
     module_wrapper = NULL;
@@ -138,9 +142,11 @@ Test(lenient_module, context_validated_to_be_loaded_after_load)
 Test(lenient_module, context_validated_to_not_be_loaded_after_unload)
 {
     int err;
+    int result;
     struct module_wrapper* module_wrapper;
 
     err = -1;
+    result = -1;
     module_wrapper = NULL;
 
     module_wrapper = module_wrapper_construct_to_heap(1, 2);
@@ -148,8 +154,8 @@ Test(lenient_module, context_validated_to_not_be_loaded_after_unload)
     cr_assert(eq(err, 0));
 
     module_wrapper_unload_context();
-    err = module_wrapper_validate_context_loaded();
-    cr_assert(ne(err, 0));
+    result = module_wrapper_is_context_loaded();
+    cr_assert(zero(i32, result));
 
     module_wrapper_destroy(module_wrapper);
     module_wrapper = NULL;
