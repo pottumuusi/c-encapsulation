@@ -18,7 +18,7 @@ jobs:
       run: ./scripts/install_build_dependencies.sh
 
     - name: Setup build environment
-      run: ldconfig
+      run: sudo ldconfig
 
     - name: Run unit tests
       run: make test
