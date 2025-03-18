@@ -103,7 +103,7 @@ module_is_context_loaded(void)                    \
 static void                                                \
 module_exit_on_unloaded_context(void)                      \
 {                                                          \
-    if (0 != module_is_context_loaded()) {                 \
+    if (0 == module_is_context_loaded()) {                 \
         fprintf(stderr, "Exiting on unloaded context.\n"); \
         exit(1);                                           \
     }                                                      \
