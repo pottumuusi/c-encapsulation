@@ -18,8 +18,6 @@
  * To have visibility to static `this_public` and `this_private` of any module
  * during compilation, 'module context' function definitions are placed behind
  * macros.
- *
- * TODO [#3] implement tests.
  */
 
 #ifndef MODULE_H_DEFINED
