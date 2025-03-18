@@ -149,7 +149,7 @@ add_to_foo_recoverable(int operand, int* result)
     is_loaded = -1;
 
     is_loaded = module_is_context_loaded();
-    if (0 == is_loaded) {
+    if ( ! is_loaded) {
         fprintf(stderr, "Module context is not loaded while adding to foo\n");
         return -1;
     }
