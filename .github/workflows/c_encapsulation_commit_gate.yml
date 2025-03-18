@@ -23,6 +23,9 @@ jobs:
     - name: Run unit tests
       run: make test
 
+    - name: Run negative build tests
+      run: ./scripts/test_builds_negative.sh
+
     - name: Build lenient encapsulation demo
       run: make out/lenient
 

@@ -28,6 +28,9 @@ test: out/utest
 scetch: out/scetch
 	$<
 
+lenient_private_via_public_interface: out/lenient_private_via_public_interface
+	echo "[!] Unexpectedly compiled a program accessing private data via public interface"
+
 out/scetch: $(SRC_TEST_SCETCH) out
 	$(CC) -g $(INCLUDE_TEST) $(SRC_TEST_SCETCH) -o $@
 
@@ -37,8 +40,8 @@ out/utest: $(SRC_TEST) out
 out/lenient: $(SRC_LENIENT) out
 	$(CC) $(INCLUDE_LENIENT) $(SRC_LENIENT) -o $@
 
-out/lenient_invalid_private_access: $(SRC_LENIENT) out
-	$(CC) -DINVALID_ACCESS_TO_PRIVATE_DATA=1 $(INCLUDE_LENIENT) $(SRC_LENIENT) -o $@
+out/lenient_private_via_public_interface: $(SRC_LENIENT) out
+	$(CC) -DACCESS_PRIVATE_VIA_PUBLIC_INTERFACE=1 $(INCLUDE_LENIENT) $(SRC_LENIENT) -o $@
 
 out/lenient_memory_error_detector: $(SRC_LENIENT) out
 	$(CC) $(INCLUDE_LENIENT) -fsanitize=address $(SRC_LENIENT) -o $@
