@@ -160,3 +160,16 @@ Test(lenient_module, context_validated_to_not_be_loaded_after_unload)
     module_wrapper_destroy(module_wrapper);
     module_wrapper = NULL;
 }
+
+Test(lenient_module, context_unload_before_load_does_not_cause_termination)
+{
+    struct module_wrapper* module_wrapper;
+
+    module_wrapper = NULL;
+
+    module_wrapper = module_wrapper_construct_to_heap(1, 2);
+    module_wrapper_unload_context();
+
+    module_wrapper_destroy(module_wrapper);
+    module_wrapper = NULL;
+}
