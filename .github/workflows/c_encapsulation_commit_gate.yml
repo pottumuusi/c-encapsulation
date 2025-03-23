@@ -29,6 +29,6 @@ jobs:
     - name: Build lenient encapsulation demo
       run: make out/lenient
 
-    - name: Run lenient encapsulation demo
-      run: ./out/lenient
+    - name: Test lenient encapsulation demo
+      run: ./scripts/test_lenient_output.sh
 
