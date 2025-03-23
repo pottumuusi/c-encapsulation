@@ -17,18 +17,5 @@ jobs:
     - name: Install build dependencies
       run: ./scripts/install_build_dependencies.sh
 
-    - name: Setup build environment
-      run: sudo ldconfig
-
-    - name: Run unit tests
-      run: make test
-
-    - name: Run negative build tests
-      run: ./scripts/test_builds_negative.sh
-
-    - name: Build lenient encapsulation demo
-      run: make out/lenient
-
-    - name: Run lenient encapsulation demo
-      run: ./out/lenient
-
+    - id: call-approval-test
+      uses: ./.github/actions/approval-test
