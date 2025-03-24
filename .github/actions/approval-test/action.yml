@@ -1,22 +1,13 @@
-name: C encapsulation commit gate
+# Expects ./scripts/install_build_dependencies.sh to have been ran prior to
+# running steps of this file.
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+name: 'C encapsulation approval test'
+description: 'Run tests for verifying expected behavior'
 
-jobs:
-  build:
+runs:
+  using: "composite"
 
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Install build dependencies
-      run: ./scripts/install_build_dependencies.sh
-
+  steps:
     - name: Setup build environment
       run: sudo ldconfig
 
@@ -31,4 +22,3 @@ jobs:
 
     - name: Test lenient encapsulation demo
       run: ./scripts/test_lenient_output.sh
-
