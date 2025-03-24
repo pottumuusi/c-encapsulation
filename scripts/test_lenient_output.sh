@@ -7,11 +7,17 @@ cd $(dirname $0)
 readonly C_ENCAPSULATION_BASE_PATH="$(pushd ../ &> /dev/null; pwd ; popd &> /dev/null)"
 
 main() {
+    local -r executable_lenient='./out/lenient'
     local output=''
 
     pushd ${C_ENCAPSULATION_BASE_PATH}
 
-    output="$(./out/lenient                                                 \
+    if [ ! -f "${executable_lenient}" ] ; then
+        echo "[!] Executable ${executable_lenient} not found."
+        exit 1
+    fi
+
+    output="$(${executable_lenient}                                         \
         | grep                                                              \
             -e "After calling demo_add_to_foo_unrecoverable, result is: 48" \
             -e "After calling demo_add_to_foo_recoverable, result is: 30"   \

@@ -2,7 +2,7 @@
 # running steps of this file.
 
 name: 'C encapsulation approval test'
-description: 'Run tests for verifying expected program behavior'
+description: 'Run tests for verifying expected behavior'
 
 runs:
   using: "composite"
