@@ -10,15 +10,20 @@ runs:
   steps:
     - name: Setup build environment
       run: sudo ldconfig
+      shell: bash
 
     - name: Run unit tests
       run: make test
+      shell: bash
 
     - name: Run negative build tests
       run: ./scripts/test_builds_negative.sh
+      shell: bash
 
     - name: Build lenient encapsulation demo
       run: make out/lenient
+      shell: bash
 
     - name: Test lenient encapsulation demo
       run: ./scripts/test_lenient_output.sh
+      shell: bash
