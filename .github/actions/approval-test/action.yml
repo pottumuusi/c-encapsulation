@@ -1,0 +1,24 @@
+# Expects ./scripts/install_build_dependencies.sh to have been ran prior to
+# running steps of this file.
+
+name: 'C encapsulation approval test'
+description: 'Run tests for verifying expected behavior'
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: Setup build environment
+      run: sudo ldconfig
+
+    - name: Run unit tests
+      run: make test
+
+    - name: Run negative build tests
+      run: ./scripts/test_builds_negative.sh
+
+    - name: Build lenient encapsulation demo
+      run: make out/lenient
+
+    - name: Test lenient encapsulation demo
+      run: ./scripts/test_lenient_output.sh
