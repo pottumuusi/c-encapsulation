@@ -8,7 +8,8 @@ readonly C_ENCAPSULATION_BASE_PATH="$(pushd ../ &> /dev/null; pwd ; popd &> /dev
 
 main() {
     local -r executable_lenient='./out/lenient'
-    local output=''
+    local matched_line_count=''
+    local total_line_count=''
 
     pushd ${C_ENCAPSULATION_BASE_PATH}
 
@@ -17,14 +18,21 @@ main() {
         exit 1
     fi
 
-    output="$(${executable_lenient}                                         \
+    matched_line_count="$(${executable_lenient}                             \
         | grep                                                              \
             -e "After calling demo_add_to_foo_unrecoverable, result is: 48" \
             -e "After calling demo_add_to_foo_recoverable, result is: 30"   \
         | wc --lines)"
 
-    if [ "2" != "${output}" ] ; then
-        echo "[!] Lenient encapsulation demo did not produce expected output."
+    total_line_count="$(${executable_lenient} | wc --lines)"
+
+    if [ "2" != "${matched_line_count}" ] ; then
+        echo "[!] Failed to match lenient encapsulation demo output."
+        exit 1
+    fi
+
+    if [ "2" != "${total_line_count}" ] ; then
+        echo "[!] Unexpected line amount in lenient encapsulation demo output."
         exit 1
     fi
 
