@@ -86,13 +86,14 @@
  * https://en.wikipedia.org/wiki/C_syntax#Storage_class_specifiers
  *
  * I came across a set of guidelines for developing safe C code: "The Power of
- * Ten – Rules for Developing Safety Critical Code". The text can be found
- * from: https://spinroot.com/gerard/pdf/P10.pdf. In the guidelines, use of
- * function pointers is prohibited. I am going to conform and remove the use of
- * function pointers in module interfacing, as they are not strictly necessary.
- * In a game project I may still utilize function pointers as they can reduce
- * code size due to their power of expression. When removing function pointer
- * use, the module call becomes:
+ * Ten – Rules for Developing Safety Critical Code". Thanks to the Primeagen
+ * for showcasing. The text can be found from:
+ * https://spinroot.com/gerard/pdf/P10.pdf. In the guidelines, use of function
+ * pointers is prohibited. I am going to conform and remove the use of function
+ * pointers in module interfacing, as they are not strictly necessary. In a
+ * game project I may still utilize function pointers as they can reduce code
+ * size due to their power of expression. When removing function pointer use,
+ * the module call becomes:
  *
  * demo_add_to_foo(demo_instance, 123);
  */
